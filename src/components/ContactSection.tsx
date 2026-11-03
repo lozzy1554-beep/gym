@@ -136,7 +136,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ locale, onInquir
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
-                <a href="https://www.google.com/maps/search/?api=1&query=Sadiqabad%2C%20Mahrabad%2C%20Pakistan" target="_blank" rel="noopener noreferrer" className="absolute bottom-3 end-3 z-10 rounded-lg bg-[#B6F500] px-4 py-2 text-xs font-bold text-[#0F1115] shadow-lg hover:bg-white transition-colors">
+                <a href="https://maps.app.goo.gl/bnA6ZTx1HJ5YnDdF9" target="_blank" rel="noopener noreferrer" className="absolute bottom-3 end-3 z-10 rounded-lg bg-[#B6F500] px-4 py-2 text-xs font-bold text-[#0F1115] shadow-lg hover:bg-white transition-colors">
                   {locale === 'en' ? 'Open Live Map' : 'گوگل میپس پر کھولیں'}
                 </a>
               </div>
