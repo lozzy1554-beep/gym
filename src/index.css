@@ -102,3 +102,31 @@
     display: none !important;
   }
 }
+
+
+/* Explicitly preserve the browser's native mouse cursor alongside the red accents. */
+@media (pointer: fine) {
+  html,
+  body,
+  #root,
+  #root * {
+    cursor: auto !important;
+  }
+
+  a,
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  select,
+  label[for] {
+    cursor: pointer !important;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
