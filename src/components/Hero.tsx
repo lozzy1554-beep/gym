@@ -124,7 +124,7 @@ export const Hero: React.FC<HeroProps> = ({ locale, onOpenTrial }) => {
                     </div>
 
                     <h3 className="font-display text-2xl sm:text-3xl font-bold text-white uppercase tracking-tight">
-                      {locale === 'en' ? 'ISLAMABAD CHAMPIONSHIP HUB' : 'اسلام آباد چیمپئن شپ حب'}
+                      {locale === 'en' ? 'SADIQABAD CHAMPIONSHIP HUB' : 'صادق آباد چیمپئن شپ حب'}
                     </h3>
 
                     <p className="text-sm text-[#A3A9B5] leading-relaxed">
@@ -136,7 +136,7 @@ export const Hero: React.FC<HeroProps> = ({ locale, onOpenTrial }) => {
                     <div className="pt-2 flex items-center justify-between text-xs text-[#F5F7FA] border-t border-[#2C313B] pt-4">
                       <div>
                         <span className="text-[#A3A9B5] block">Location</span>
-                        <span className="font-semibold">Sector F-7/2 Jinnah Super</span>
+                        <span className="font-semibold">Sadiqabad, Mahrabad</span>
                       </div>
                       <div>
                         <span className="text-[#A3A9B5] block">Hours</span>
