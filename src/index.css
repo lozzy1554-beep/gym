@@ -104,29 +104,38 @@
 }
 
 
-/* Explicitly preserve the browser's native mouse cursor alongside the red accents. */
-@media (pointer: fine) {
-  html,
-  body,
-  #root,
-  #root * {
-    cursor: auto !important;
-  }
 
-  a,
-  button,
-  [role="button"],
-  input[type="button"],
-  input[type="submit"],
-  input[type="reset"],
-  select,
-  label[for] {
-    cursor: pointer !important;
-  }
 
-  input,
-  textarea,
-  [contenteditable="true"] {
-    cursor: text !important;
+/* A drawn white arrow sits above the red dot and trailing ring. */
+.custom-cursor-arrow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 28px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 100002;
+  will-change: transform;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85));
+}
+
+.custom-cursor-arrow.is-visible {
+  opacity: 1;
+}
+
+/* Hide the native cursor only when the custom arrow is active. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.custom-cursor-active,
+  html.custom-cursor-active *,
+  html.custom-cursor-active *::before,
+  html.custom-cursor-active *::after {
+    cursor: none !important;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .custom-cursor-arrow {
+    display: none !important;
   }
 }
