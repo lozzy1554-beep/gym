@@ -95,10 +95,19 @@ export const Hero: React.FC<HeroProps> = ({ locale, onOpenTrial }) => {
           <div className="lg:col-span-5 relative">
             <Reveal kind="side" delay={0.15}>
               <div className="relative rounded-2xl overflow-hidden bg-[#181B21] border border-[#2C313B] shadow-2xl">
-                {/* Overlay with subtle dark scrim */}
-                <div className="relative h-96 sm:h-[420px] w-full overflow-hidden bg-gradient-to-tr from-[#0F1115] via-[#181B21] to-[#222630] flex flex-col justify-end p-8">
-                  {/* Visual Graphic Element */}
-                  <div className="absolute inset-0 opacity-20 bg-grid-pattern pointer-events-none" />
+                {/* Premium gym photography with layered contrast for readable text */}
+                <div className="relative h-96 sm:h-[460px] w-full overflow-hidden bg-[#11151b] flex flex-col justify-end p-6 sm:p-8">
+                  <img
+                    src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=85"
+                    alt={locale === 'en' ? 'Modern premium gym with strength training equipment' : 'جدید اور پریمیم جم کا اندرونی منظر'}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1115] via-[#0F1115]/65 to-[#0F1115]/10" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+                  <div className="absolute inset-0 opacity-15 bg-grid-pattern pointer-events-none" />
                   
                   {/* SVG Athletic Silhouette & Weights Graphic */}
                   <div className="absolute top-8 end-8 text-[#B6F500]/20 pointer-events-none">
