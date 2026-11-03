@@ -131,11 +131,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ locale, onInquir
               <div className="rounded-2xl overflow-hidden bg-[#181B21] border border-[#2C313B] h-60 relative shadow-md">
                 <iframe
                   title={t.contact.mapEmbedTitle}
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13277.674843516624!2d73.04546553856173!3d33.72262947158739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbf9dfc5f0135%3A0xb3e1104e6c9b5d84!2sF-7%20Markaz%20F%207%20Markaz%20F-7%2C%20Islamabad!5e0!3m2!1sen!2spk!4v1700000000000!5m2!1sen!2spk"
+                  src="https://www.google.com/maps?q=Sadiqabad%2C%20Mahrabad%2C%20Pakistan&output=embed"
                   className="w-full h-full border-0 filter invert contrast-125 opacity-85"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
+                <a href="https://www.google.com/maps/search/?api=1&query=Sadiqabad%2C%20Mahrabad%2C%20Pakistan" target="_blank" rel="noopener noreferrer" className="absolute bottom-3 end-3 z-10 rounded-lg bg-[#B6F500] px-4 py-2 text-xs font-bold text-[#0F1115] shadow-lg hover:bg-white transition-colors">
+                  {locale === 'en' ? 'Open Live Map' : 'گوگل میپس پر کھولیں'}
+                </a>
               </div>
             </Reveal>
           </div>
