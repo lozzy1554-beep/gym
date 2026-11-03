@@ -132,6 +132,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ locale }) => {
                   <img
                     src={item.url}
                     alt={content.title}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -178,6 +180,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ locale }) => {
               <img
                 src={activeImage.url}
                 alt={activeImage[locale].title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
