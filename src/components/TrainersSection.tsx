@@ -46,6 +46,8 @@ export const TrainersSection: React.FC<TrainersSectionProps> = ({ locale, onBook
                       <img
                         src={trainer.photoUrl}
                         alt={content.name}
+                        loading="lazy"
+                        decoding="async"
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover object-top filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
                       />
@@ -119,6 +121,8 @@ export const TrainersSection: React.FC<TrainersSectionProps> = ({ locale, onBook
                 <img
                   src={selectedTrainer.photoUrl}
                   alt={selectedTrainer[locale].name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
