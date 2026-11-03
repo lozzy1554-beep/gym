@@ -14,6 +14,7 @@ import React, { useEffect, useRef, useState } from 'react';
 export const CustomCursor: React.FC = () => {
   const outerCircleRef = useRef<HTMLDivElement>(null);
   const innerDotRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<SVGSVGElement>(null);
 
   // Enabled state determines if desktop fine pointer & allowed
   const [isEnabled, setIsEnabled] = useState(false);
@@ -77,6 +78,8 @@ export const CustomCursor: React.FC = () => {
         innerY = mouseY;
         if (outerCircleRef.current) outerCircleRef.current.style.opacity = '1';
         if (innerDotRef.current) innerDotRef.current.style.opacity = '1';
+      if (arrowRef.current) arrowRef.current.style.opacity = '1';
+        if (arrowRef.current) arrowRef.current.style.opacity = '1';
       }
     };
 
@@ -90,6 +93,7 @@ export const CustomCursor: React.FC = () => {
       isVisible = false;
       if (outerCircleRef.current) outerCircleRef.current.style.opacity = '0';
       if (innerDotRef.current) innerDotRef.current.style.opacity = '0';
+      if (arrowRef.current) arrowRef.current.style.opacity = '0';
     };
 
     const onMouseDown = () => {
@@ -138,6 +142,10 @@ export const CustomCursor: React.FC = () => {
             outerCircleRef.current.style.backgroundColor = 'transparent';
             outerCircleRef.current.style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.45)';
           }
+        }
+
+        if (arrowRef.current) {
+          arrowRef.current.style.transform = `translate3d(${mouseX - 1}px, ${mouseY - 1}px, 0)`;
         }
 
         if (innerDotRef.current) {
@@ -189,24 +197,34 @@ export const CustomCursor: React.FC = () => {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none"
     >
-      {/* Outer Smooth Red Circle (32px diameter) */}
+      {/* Bottom layer: smooth trailing red ring */}
       <div
         ref={outerCircleRef}
-        className="pointer-events-none fixed top-0 left-0 w-8 h-8 rounded-full border border-red-500 will-change-transform transition-[border-color,background-color,box-shadow] duration-200 ease-out"
+        className="pointer-events-none fixed top-0 left-0 z-[10001] w-8 h-8 rounded-full border border-red-500 will-change-transform transition-[border-color,background-color,box-shadow] duration-200 ease-out"
         style={{
           opacity: 0,
           boxShadow: '0 0 10px rgba(239, 68, 68, 0.45)',
         }}
       />
 
-      {/* Inner Direct Red Dot (6px diameter) */}
+      {/* Middle layer: direct red dot */}
       <div
         ref={innerDotRef}
-        className="pointer-events-none fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-red-500 will-change-transform shadow-[0_0_6px_rgba(239,68,68,0.9)]"
+        className="pointer-events-none fixed top-0 left-0 z-[10002] w-1.5 h-1.5 rounded-full bg-red-500 will-change-transform shadow-[0_0_6px_rgba(239,68,68,0.9)]"
         style={{
           opacity: 0,
         }}
       />
+      {/* Top layer: visible mouse arrow, anchored at the pointer tip */}
+      <svg
+        ref={arrowRef}
+        aria-hidden="true"
+        viewBox="0 0 24 32"
+        className="pointer-events-none fixed top-0 left-0 z-[10003] w-5 h-7 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]"
+        style={{ opacity: 0 }}
+      >
+        <path d="M2 1 L2 25 L8.2 19.2 L12.2 29.5 L16.1 27.8 L12.1 17.7 L21 17.2 Z" fill="#fff" stroke="#17191f" strokeWidth="1.5" strokeLinejoin="round" />
+      </svg>
     </div>
   );
 };
