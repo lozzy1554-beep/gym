@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const finePointer = window.matchMedia('(pointer: fine)');
@@ -11,7 +12,8 @@ export function CustomCursor() {
 
     const ring = ringRef.current;
     const dot = dotRef.current;
-    if (!ring || !dot) return;
+    const arrow = arrowRef.current;
+    if (!ring || !dot || !arrow) return;
 
     let targetX = -100;
     let targetY = -100;
@@ -20,8 +22,10 @@ export function CustomCursor() {
     let frame = 0;
     let visible = false;
 
-    const place = (element: HTMLDivElement, x: number, y: number) => {
-      element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    document.documentElement.classList.add('custom-cursor-active');
+
+    const place = (element: HTMLElement | SVGSVGElement, x: number, y: number) => {
+      element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     };
 
     const animate = () => {
@@ -35,6 +39,7 @@ export function CustomCursor() {
       targetX = event.clientX;
       targetY = event.clientY;
       place(dot, targetX, targetY);
+      place(arrow, targetX, targetY);
 
       if (!visible) {
         visible = true;
@@ -43,6 +48,7 @@ export function CustomCursor() {
         place(ring, ringX, ringY);
         ring.classList.add('is-visible');
         dot.classList.add('is-visible');
+        arrow.classList.add('is-visible');
         frame = window.requestAnimationFrame(animate);
       }
     };
@@ -63,6 +69,7 @@ export function CustomCursor() {
       visible = false;
       ring.classList.remove('is-visible', 'is-hovering');
       dot.classList.remove('is-visible');
+      arrow.classList.remove('is-visible');
       if (frame) window.cancelAnimationFrame(frame);
       frame = 0;
     };
@@ -78,6 +85,7 @@ export function CustomCursor() {
       document.removeEventListener('pointerout', onPointerOut);
       document.documentElement.removeEventListener('pointerleave', onPointerLeave);
       if (frame) window.cancelAnimationFrame(frame);
+      document.documentElement.classList.remove('custom-cursor-active');
     };
   }, []);
 
@@ -85,6 +93,17 @@ export function CustomCursor() {
     <>
       <div ref={ringRef} className="custom-cursor-ring" aria-hidden="true" />
       <div ref={dotRef} className="custom-cursor-dot" aria-hidden="true" />
+      <svg
+        ref={arrowRef}
+        className="custom-cursor-arrow"
+        width="22"
+        height="28"
+        viewBox="0 0 22 28"
+        aria-hidden="true"
+      >
+        <path d="M2 1.5 L2 22 L7.2 17.2 L11.2 26 L15 24.3 L11 15.6 L18.5 15.2 Z"
+          fill="#ffffff" stroke="#15171b" strokeWidth="1.6" strokeLinejoin="round" />
+      </svg>
     </>
   );
 }
