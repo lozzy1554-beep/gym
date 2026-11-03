@@ -1,109 +1,214 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-export function CustomCursor() {
-  const ringRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const arrowRef = useRef<SVGSVGElement>(null);
+/**
+ * CustomCursor
+ * Premium animated custom cursor for Titan Gym.
+ * - Desktop only (pointer: fine).
+ * - Thin red circular outline (32px) + center solid red dot (6px).
+ * - Smooth lerp trailing animation via requestAnimationFrame (0 React re-renders on move).
+ * - Subtle red glow around outer circle.
+ * - Expands smoothly over interactive elements (buttons, links, inputs).
+ * - pointer-events: none (never blocks clicks, selection, or scrolling).
+ * - Respects prefers-reduced-motion and touch devices.
+ */
+export const CustomCursor: React.FC = () => {
+  const outerCircleRef = useRef<HTMLDivElement>(null);
+  const innerDotRef = useRef<HTMLDivElement>(null);
+
+  // Enabled state determines if desktop fine pointer & allowed
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
-    const finePointer = window.matchMedia('(pointer: fine)');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!finePointer.matches || reducedMotion.matches) return;
+    // 1. Accessibility & Device Checks
+    const finePointerQuery = window.matchMedia('(pointer: fine)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    const ring = ringRef.current;
-    const dot = dotRef.current;
-    const arrow = arrowRef.current;
-    if (!ring || !dot || !arrow) return;
-
-    let targetX = -100;
-    let targetY = -100;
-    let ringX = targetX;
-    let ringY = targetY;
-    let frame = 0;
-    let visible = false;
-
-    document.documentElement.classList.add('custom-cursor-active');
-
-    const place = (element: HTMLElement | SVGSVGElement, x: number, y: number) => {
-      element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    const checkEnabled = () => {
+      // Must have a fine pointer (mouse/trackpad), not touch-only
+      const isFinePointer = finePointerQuery.matches;
+      setIsEnabled(isFinePointer);
+      return isFinePointer;
     };
 
-    const animate = () => {
-      ringX += (targetX - ringX) * 0.18;
-      ringY += (targetY - ringY) * 0.18;
-      place(ring, ringX, ringY);
-      frame = window.requestAnimationFrame(animate);
+    if (!checkEnabled()) {
+      return;
+    }
+
+    const finePointerListener = (e: MediaQueryListEvent) => {
+      setIsEnabled(e.matches);
     };
 
-    const onPointerMove = (event: PointerEvent) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      place(dot, targetX, targetY);
-      place(arrow, targetX, targetY);
+    try {
+      finePointerQuery.addEventListener('change', finePointerListener);
+    } catch {
+      finePointerQuery.addListener(finePointerListener);
+    }
 
-      if (!visible) {
-        visible = true;
-        ringX = targetX;
-        ringY = targetY;
-        place(ring, ringX, ringY);
-        ring.classList.add('is-visible');
-        dot.classList.add('is-visible');
-        arrow.classList.add('is-visible');
-        frame = window.requestAnimationFrame(animate);
+    // Add CSS class to body to hide native cursor on desktop
+    document.body.classList.add('titan-custom-cursor-active');
+
+    // 2. High-performance RAF state without triggering React renders
+    let mouseX = -100;
+    let mouseY = -100;
+    let outerX = -100;
+    let outerY = -100;
+    let innerX = -100;
+    let innerY = -100;
+    let isVisible = false;
+    let isHovering = false;
+    let isMouseDown = false;
+    let rafId: number | null = null;
+
+    // Check if prefers reduced motion
+    const prefersReducedMotion = reducedMotionQuery.matches;
+    // Outer circle trailing speed: 0.16 for sleek delay, 1.0 for instant if reduced motion
+    const outerLerp = prefersReducedMotion ? 1.0 : 0.16;
+    const innerLerp = prefersReducedMotion ? 1.0 : 0.75;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!isVisible) {
+        isVisible = true;
+        outerX = mouseX;
+        outerY = mouseY;
+        innerX = mouseX;
+        innerY = mouseY;
+        if (outerCircleRef.current) outerCircleRef.current.style.opacity = '1';
+        if (innerDotRef.current) innerDotRef.current.style.opacity = '1';
       }
     };
 
-    const isInteractive = (target: EventTarget | null) =>
-      target instanceof Element &&
-      Boolean(target.closest('a, button, [role="button"], input, select, textarea, label'));
-
-    const onPointerOver = (event: PointerEvent) => {
-      if (isInteractive(event.target)) ring.classList.add('is-hovering');
+    const onMouseEnter = () => {
+      isVisible = true;
+      if (outerCircleRef.current) outerCircleRef.current.style.opacity = '1';
+      if (innerDotRef.current) innerDotRef.current.style.opacity = '1';
     };
 
-    const onPointerOut = (event: PointerEvent) => {
-      if (!isInteractive(event.relatedTarget)) ring.classList.remove('is-hovering');
+    const onMouseLeave = () => {
+      isVisible = false;
+      if (outerCircleRef.current) outerCircleRef.current.style.opacity = '0';
+      if (innerDotRef.current) innerDotRef.current.style.opacity = '0';
     };
 
-    const onPointerLeave = () => {
-      visible = false;
-      ring.classList.remove('is-visible', 'is-hovering');
-      dot.classList.remove('is-visible');
-      arrow.classList.remove('is-visible');
-      if (frame) window.cancelAnimationFrame(frame);
-      frame = 0;
+    const onMouseDown = () => {
+      isMouseDown = true;
     };
 
-    window.addEventListener('pointermove', onPointerMove);
-    document.addEventListener('pointerover', onPointerOver);
-    document.addEventListener('pointerout', onPointerOut);
-    document.documentElement.addEventListener('pointerleave', onPointerLeave);
+    const onMouseUp = () => {
+      isMouseDown = false;
+    };
+
+    // Detect if hovering over clickable / interactive elements
+    const onMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const interactive = target.closest(
+        'a, button, input, textarea, select, [role="button"], label, [tabindex="0"], summary, .cursor-pointer'
+      );
+      isHovering = Boolean(interactive);
+    };
+
+    // 3. Animation loop using requestAnimationFrame
+    const renderLoop = () => {
+      if (isVisible) {
+        // Linear interpolation for smooth trailing
+        outerX += (mouseX - outerX) * outerLerp;
+        outerY += (mouseY - outerY) * outerLerp;
+
+        innerX += (mouseX - innerX) * innerLerp;
+        innerY += (mouseY - innerY) * innerLerp;
+
+        if (outerCircleRef.current) {
+          // Scale based on hover or active press
+          let scale = isHovering ? 1.6 : 1;
+          if (isMouseDown) scale *= 0.85;
+
+          // Outer circle radius is 16px (32px diameter / 2)
+          outerCircleRef.current.style.transform = `translate3d(${outerX - 16}px, ${outerY - 16}px, 0) scale(${scale})`;
+          
+          if (isHovering) {
+            outerCircleRef.current.style.borderColor = '#FF3344';
+            outerCircleRef.current.style.backgroundColor = 'rgba(239, 68, 68, 0.08)';
+            outerCircleRef.current.style.boxShadow = '0 0 18px rgba(239, 68, 68, 0.65), inset 0 0 6px rgba(239, 68, 68, 0.25)';
+          } else {
+            outerCircleRef.current.style.borderColor = 'rgba(239, 68, 68, 0.85)';
+            outerCircleRef.current.style.backgroundColor = 'transparent';
+            outerCircleRef.current.style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.45)';
+          }
+        }
+
+        if (innerDotRef.current) {
+          // Center dot radius is 3px (6px diameter / 2)
+          const dotScale = isMouseDown ? 0.7 : 1;
+          innerDotRef.current.style.transform = `translate3d(${innerX - 3}px, ${innerY - 3}px, 0) scale(${dotScale})`;
+        }
+      }
+
+      rafId = requestAnimationFrame(renderLoop);
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mouseover', onMouseOver, { passive: true });
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
+    window.addEventListener('mouseup', onMouseUp, { passive: true });
+    document.documentElement.addEventListener('mouseenter', onMouseEnter, { passive: true });
+    document.documentElement.addEventListener('mouseleave', onMouseLeave, { passive: true });
+
+    rafId = requestAnimationFrame(renderLoop);
 
     return () => {
-      window.removeEventListener('pointermove', onPointerMove);
-      document.removeEventListener('pointerover', onPointerOver);
-      document.removeEventListener('pointerout', onPointerOut);
-      document.documentElement.removeEventListener('pointerleave', onPointerLeave);
-      if (frame) window.cancelAnimationFrame(frame);
-      document.documentElement.classList.remove('custom-cursor-active');
+      document.body.classList.remove('titan-custom-cursor-active');
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseover', onMouseOver);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+      document.documentElement.removeEventListener('mouseenter', onMouseEnter);
+      document.documentElement.removeEventListener('mouseleave', onMouseLeave);
+
+      try {
+        finePointerQuery.removeEventListener('change', finePointerListener);
+      } catch {
+        finePointerQuery.removeListener(finePointerListener);
+      }
+
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, []);
 
+  if (!isEnabled) {
+    return null;
+  }
+
   return (
-    <>
-      <div ref={ringRef} className="custom-cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="custom-cursor-dot" aria-hidden="true" />
-      <svg
-        ref={arrowRef}
-        className="custom-cursor-arrow"
-        width="22"
-        height="28"
-        viewBox="0 0 22 28"
-        aria-hidden="true"
-      >
-        <path d="M2 1.5 L2 22 L7.2 17.2 L11.2 26 L15 24.3 L11 15.6 L18.5 15.2 Z"
-          fill="#ffffff" stroke="#15171b" strokeWidth="1.6" strokeLinejoin="round" />
-      </svg>
-    </>
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none"
+    >
+      {/* Outer Smooth Red Circle (32px diameter) */}
+      <div
+        ref={outerCircleRef}
+        className="pointer-events-none fixed top-0 left-0 w-8 h-8 rounded-full border border-red-500 will-change-transform transition-[border-color,background-color,box-shadow] duration-200 ease-out"
+        style={{
+          opacity: 0,
+          boxShadow: '0 0 10px rgba(239, 68, 68, 0.45)',
+        }}
+      />
+
+      {/* Inner Direct Red Dot (6px diameter) */}
+      <div
+        ref={innerDotRef}
+        className="pointer-events-none fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-red-500 will-change-transform shadow-[0_0_6px_rgba(239,68,68,0.9)]"
+        style={{
+          opacity: 0,
+        }}
+      />
+    </div>
   );
-}
+};
+
+export default CustomCursor;

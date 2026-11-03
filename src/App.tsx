@@ -110,7 +110,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0F1115] text-[#F5F7FA] selection:bg-[#B6F500] selection:text-[#0F1115]">
+      {/* Premium Red Custom Animated Cursor (Desktop only) */}
       <CustomCursor />
+
       {/* Top Header */}
       <Header
         locale={locale}
