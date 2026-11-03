@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import "./styles/futuristic-fx.css";
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0F1115;
+    color: #F5F7FA;
+  }
+
+  [dir="rtl"] {
+    font-family: 'Noto Naskh Arabic', 'Noto Nastaliq Urdu', system-ui, sans-serif;
+  }
+
+  /* Custom scrollbar for athletic dark UI */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0F1115;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2C313B;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f4654;
+  }
+}
+
+.font-display {
+  font-family: 'Oswald', -apple-system, sans-serif;
+  text-transform: uppercase;
+}
+
+[dir="rtl"] .font-display {
+  font-family: 'Noto Naskh Arabic', system-ui, sans-serif;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.font-urdu {
+  font-family: 'Noto Naskh Arabic', 'Noto Nastaliq Urdu', serif;
+}
+
+/* Subtle gym mesh pattern for hero background */
+.bg-grid-pattern {
+  background-image: radial-gradient(rgba(182, 245, 0, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(182, 245, 0, 0.12) 0%, rgba(15, 17, 21, 0) 65%);
+}

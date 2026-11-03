@@ -1,0 +1,6 @@
+{
+  "name": "Titan Gym & Fitness Club",
+  "description": "Professional bilingual (English & Urdu RTL) premium athletic fitness club website with membership plans, certified trainers, weekly timetable, trial booking, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

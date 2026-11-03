@@ -1,0 +1,70 @@
+/* globals.css mein import karein:  @import "../styles/futuristic-fx.css";  */
+:root { --fx-accent: #b6f500; --fx-bg: #0f1115; --fx-ink: #0f1115; }
+
+@property --fx-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+
+.fx-wrap { display: inline-block; background: none; border: 0; padding: 0; cursor: pointer; }
+.fx-btn { position: relative; display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem; padding: .85rem 1.6rem; border-radius: 999px; font-weight: 700; overflow: hidden; isolation: isolate; }
+.fx-label { position: relative; z-index: 2; }
+
+/* PRIMARY: shimmer + glow pulse */
+.fx-primary { background: var(--fx-accent); color: var(--fx-ink); animation: fx-glow 2.4s ease-in-out infinite; }
+.fx-primary::after { content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.7) 50%, transparent 70%);
+  transform: translateX(-120%); animation: fx-sweep 2.8s ease-in-out infinite; }
+[dir="rtl"] .fx-primary::after { transform: translateX(120%); animation-name: fx-sweep-rtl; }
+@keyframes fx-sweep { to { transform: translateX(120%); } }
+@keyframes fx-sweep-rtl { to { transform: translateX(-120%); } }
+@keyframes fx-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(182,245,0,.0), 0 0 18px rgba(182,245,0,.35); }
+  50% { box-shadow: 0 0 0 6px rgba(182,245,0,.08), 0 0 34px rgba(182,245,0,.65); } }
+
+/* OUTLINE: rotating neon border */
+.fx-outline { color: #fff; background: var(--fx-bg); }
+.fx-outline::before { content: ""; position: absolute; inset: 0; z-index: 0; padding: 2px; border-radius: inherit;
+  background: conic-gradient(from var(--fx-angle), transparent 0 60%, var(--fx-accent) 80%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask-composite: exclude; animation: fx-spin 3s linear infinite; }
+@keyframes fx-spin { to { --fx-angle: 360deg; } }
+
+/* MAGNETIC: gradient + soft lift */
+.fx-magnetic { color: var(--fx-ink); background: linear-gradient(135deg, var(--fx-accent), #5ff0c8); }
+.fx-magnetic:hover { box-shadow: 0 12px 40px rgba(95,240,200,.45); }
+
+/* WHATSAPP: pulse rings */
+.fx-whatsapp { background: #25d366; color: #fff; width: 3.5rem; height: 3.5rem; padding: 0; overflow: visible; }
+.fx-whatsapp::before, .fx-whatsapp::after { content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid #25d366; animation: fx-ring 2s ease-out infinite; z-index: 0; }
+.fx-whatsapp::after { animation-delay: 1s; }
+@keyframes fx-ring { from { transform: scale(1); opacity: .8; } to { transform: scale(1.9); opacity: 0; } }
+
+/* GHOST: energy underline (start se end tak, RTL mein khud ulta) */
+.fx-ghost { color: #fff; padding: .4rem .2rem; border-radius: 0; overflow: visible; }
+.fx-ghost::after { content: ""; position: absolute; inset-inline-start: 0; bottom: 0; height: 2px; width: 100%;
+  background: linear-gradient(90deg, var(--fx-accent), transparent); transform: scaleX(0); transform-origin: left;
+  transition: transform .45s cubic-bezier(.22,1,.36,1); }
+[dir="rtl"] .fx-ghost::after { transform-origin: right; }
+.fx-ghost:hover::after { transform: scaleX(1); }
+
+/* SUBMIT: ripple + loading bar */
+.fx-submit { background: var(--fx-accent); color: var(--fx-ink); }
+.fx-ripple { position: absolute; z-index: 1; width: 10px; height: 10px; margin: -5px; border-radius: 50%;
+  background: rgba(255,255,255,.7); animation: fx-ripple .7s ease-out forwards; }
+@keyframes fx-ripple { to { transform: scale(30); opacity: 0; } }
+.fx-loadbar { position: absolute; inset-inline: 0; bottom: 0; height: 3px; z-index: 2;
+  background: linear-gradient(90deg, transparent, #fff, transparent); animation: fx-load 1s linear infinite; }
+@keyframes fx-load { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+/* Futuristic background helpers: <section class="fx-grid fx-scan"> */
+.fx-grid { background-image: linear-gradient(rgba(182,245,0,.06) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(182,245,0,.06) 1px, transparent 1px); background-size: 48px 48px; }
+.fx-scan { position: relative; }
+.fx-scan::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(transparent 0 48%, rgba(182,245,0,.08) 50%, transparent 52% 100%);
+  background-size: 100% 220px; animation: fx-scan 6s linear infinite; }
+@keyframes fx-scan { from { background-position: 0 -220px; } to { background-position: 0 100%; } }
+
+/* Accessibility: jin users ne motion band ki hai unke liye sab off */
+@media (prefers-reduced-motion: reduce) {
+  .fx-btn, .fx-btn::before, .fx-btn::after, .fx-scan::after { animation: none !important; transition: none !important; }
+}
