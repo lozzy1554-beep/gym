@@ -76,7 +76,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, onOpenAdmin, onOpenMembe
             </div>
             <div className="space-y-2 text-xs">
               <p>
-                <strong className="text-white">Facility:</strong> Sector F-7/2, Islamabad
+                <strong className="text-white">Facility:</strong> Sadiqabad, Mahrabad, Pakistan
               </p>
               <p>
                 <strong className="text-white">Hours:</strong> Mon–Sat 06:00 – 23:00 | Sun 08:00 – 20:00
