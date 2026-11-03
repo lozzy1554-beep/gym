@@ -17,6 +17,7 @@ import { TrialBookingModal } from './components/TrialBookingModal';
 import { AdminPanel } from './components/AdminPanel';
 import { MemberDashboardModal } from './components/MemberDashboardModal';
 import { CoachAiDrawer } from './components/CoachAiDrawer';
+import { SupabaseManager } from './components/SupabaseManager';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import PageTransition from './components/motion/PageTransition';
 import { Bot, Sparkles } from 'lucide-react';
@@ -50,6 +51,7 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isMemberOpen, setIsMemberOpen] = useState(false);
   const [isCoachAiOpen, setIsCoachAiOpen] = useState(false);
+  const [isSupabaseOpen, setIsSupabaseOpen] = useState(false);
 
   // Sync html attributes on locale change
   useEffect(() => {
@@ -117,6 +119,7 @@ export default function App() {
         }}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenMember={() => setIsMemberOpen(true)}
+        onOpenSupabase={() => setIsSupabaseOpen(true)}
         inquiryCount={inquiries.filter((i) => i.status === 'new').length}
       />
 
@@ -224,6 +227,11 @@ export default function App() {
         isOpen={isCoachAiOpen}
         onClose={() => setIsCoachAiOpen(false)}
         locale={locale}
+      />
+
+      <SupabaseManager
+        isOpen={isSupabaseOpen}
+        onClose={() => setIsSupabaseOpen(false)}
       />
     </div>
   );
