@@ -19,6 +19,7 @@ import { MemberDashboardModal } from './components/MemberDashboardModal';
 import { CoachAiDrawer } from './components/CoachAiDrawer';
 import { SupabaseManager } from './components/SupabaseManager';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { CustomCursor } from './components/CustomCursor';
 import PageTransition from './components/motion/PageTransition';
 import { Bot, Sparkles } from 'lucide-react';
 
@@ -109,6 +110,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0F1115] text-[#F5F7FA] selection:bg-[#B6F500] selection:text-[#0F1115]">
+      <CustomCursor />
       {/* Top Header */}
       <Header
         locale={locale}
