@@ -68,3 +68,23 @@
 @media (prefers-reduced-motion: reduce) {
   .fx-btn, .fx-btn::before, .fx-btn::after, .fx-scan::after { animation: none !important; transition: none !important; }
 }
+
+
+/* Global futuristic micro-interactions for elements that were previously static */
+.fx-interactive { position: relative; isolation: isolate; transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .28s ease, filter .28s ease; }
+a[href]:not(.fx-wrap), button, [role="button"] { transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .28s ease, color .28s ease, background-color .28s ease; }
+a[href]:not(.fx-wrap):hover, button:hover, [role="button"]:hover { filter: drop-shadow(0 0 8px rgba(182,245,0,.16)); }
+button:active, a[href]:active, [role="button"]:active { transform: scale(.97); }
+img { transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+a:hover img, button:hover img, figure:hover img, .group:hover img { transform: scale(1.035); filter: saturate(1.08); }
+.fx-surface { position: relative; overflow: hidden; }
+.fx-surface::after { content: ""; position: absolute; inset: -120% auto -120% -40%; width: 28%; pointer-events: none; transform: rotate(18deg); background: linear-gradient(90deg, transparent, rgba(182,245,0,.12), transparent); transition: left .8s ease; }
+.fx-surface:hover::after { left: 130%; }
+@keyframes fx-ambient-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@media (prefers-reduced-motion: no-preference) {
+  .fx-float { animation: fx-ambient-float 5s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  a[href], button, [role="button"], img { transition: none !important; animation: none !important; }
+  a:hover img, button:hover img, figure:hover img, .group:hover img { transform: none !important; }
+}
