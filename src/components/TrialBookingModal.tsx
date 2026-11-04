@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Locale, Inquiry, MembershipPlan } from '../types';
 import { uiTranslations } from '../data/translations';
-import { CheckCircle, X, ShieldAlert, Phone, Sparkles, QrCode } from 'lucide-react';
+import { CheckCircle, X, ShieldAlert, Sparkles, QrCode } from 'lucide-react';
 import FxButton from './motion/FxButton';
 
 interface TrialBookingModalProps {
