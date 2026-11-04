@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ locale, onOpenTrial }) => {
           {/* Athletic Visual Card / Marquee Feature */}
           <div className="lg:col-span-5 relative">
             <Reveal kind="side" delay={0.15}>
-              <div className="relative rounded-2xl overflow-hidden bg-[#181B21] border border-[#2C313B] shadow-2xl">
+              <div className="group fx-surface relative rounded-2xl overflow-hidden bg-[#181B21] border border-[#2C313B] shadow-2xl">
                 {/* Premium gym photography with layered contrast for readable text */}
                 <div className="relative h-96 sm:h-[460px] w-full overflow-hidden bg-[#11151b] flex flex-col justify-end p-6 sm:p-8">
                   <img
