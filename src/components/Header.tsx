@@ -10,7 +10,6 @@ interface HeaderProps {
   onOpenTrial: () => void;
   onOpenAdmin: () => void;
   onOpenMember: () => void;
-  onOpenSupabase: () => void;
   inquiryCount?: number;
 }
 
@@ -20,7 +19,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenTrial,
   onOpenAdmin,
   onOpenMember,
-  onOpenSupabase,
   inquiryCount = 0,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -108,17 +106,6 @@ export const Header: React.FC<HeaderProps> = ({
             {inquiryCount > 0 && (
               <span className="w-2 h-2 rounded-full bg-[#B6F500]" />
             )}
-          </button>
-
-          {/* Supabase Hub Button */}
-          <button
-            onClick={onOpenSupabase}
-            type="button"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#181B21] border border-[#2C313B] text-xs font-medium text-[#A3A9B5] hover:text-[#B6F500] hover:border-[#B6F500]/50 transition-colors whitespace-nowrap cursor-pointer"
-            title="Supabase Database & Auth Hub"
-          >
-            <span className="font-mono text-[#B6F500] font-bold">⚡</span>
-            <span>Supabase DB</span>
           </button>
 
           {/* Primary CTA using FxButton primary with shimmer sweep & glow pulse */}
