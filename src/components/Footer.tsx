@@ -81,6 +81,10 @@ export const Footer: React.FC<FooterProps> = ({ locale, onOpenAdmin, onOpenMembe
               <p>
                 <strong className="text-white">Hours:</strong> Mon–Sat 06:00 – 23:00 | Sun 08:00 – 20:00
               </p>
+              <p className="flex flex-wrap items-center gap-3">
+                <a href="tel:+923277072542" className="text-[#B6F500] hover:text-white transition-colors">Call: 0327 7072542</a>
+                <a href="https://wa.me/923277072542" target="_blank" rel="noopener noreferrer" className="text-[#25D366] hover:text-white transition-colors">WhatsApp</a>
+              </p>
               <p>
                 <strong className="text-white">Ladies Slot:</strong> Daily 10:00 – 14:00
               </p>
