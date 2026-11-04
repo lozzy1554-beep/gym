@@ -78,7 +78,6 @@ export const CustomCursor: React.FC = () => {
         innerY = mouseY;
         if (outerCircleRef.current) outerCircleRef.current.style.opacity = '1';
         if (innerDotRef.current) innerDotRef.current.style.opacity = '1';
-      if (arrowRef.current) arrowRef.current.style.opacity = '1';
         if (arrowRef.current) arrowRef.current.style.opacity = '1';
       }
     };
@@ -87,6 +86,7 @@ export const CustomCursor: React.FC = () => {
       isVisible = true;
       if (outerCircleRef.current) outerCircleRef.current.style.opacity = '1';
       if (innerDotRef.current) innerDotRef.current.style.opacity = '1';
+      if (arrowRef.current) arrowRef.current.style.opacity = '1';
     };
 
     const onMouseLeave = () => {
