@@ -14,10 +14,9 @@ import { FaqSection } from './components/FaqSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { TrialBookingModal } from './components/TrialBookingModal';
-import { AdminPanel } from './components/AdminPanel';
+import { AdminAccess } from './components/AdminAccess';
 import { MemberDashboardModal } from './components/MemberDashboardModal';
 import { CoachAiDrawer } from './components/CoachAiDrawer';
-import { SupabaseManager } from './components/SupabaseManager';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { CustomCursor } from './components/CustomCursor';
 import PageTransition from './components/motion/PageTransition';
@@ -52,7 +51,6 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isMemberOpen, setIsMemberOpen] = useState(false);
   const [isCoachAiOpen, setIsCoachAiOpen] = useState(false);
-  const [isSupabaseOpen, setIsSupabaseOpen] = useState(false);
 
   // Sync html attributes on locale change
   useEffect(() => {
@@ -123,7 +121,6 @@ export default function App() {
         }}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenMember={() => setIsMemberOpen(true)}
-        onOpenSupabase={() => setIsSupabaseOpen(true)}
         inquiryCount={inquiries.filter((i) => i.status === 'new').length}
       />
 
@@ -209,7 +206,7 @@ export default function App() {
       />
 
       {isAdminOpen && (
-        <AdminPanel
+        <AdminAccess
           locale={locale}
           inquiries={inquiries}
           onUpdateInquiryStatus={handleUpdateInquiryStatus}
@@ -231,11 +228,6 @@ export default function App() {
         isOpen={isCoachAiOpen}
         onClose={() => setIsCoachAiOpen(false)}
         locale={locale}
-      />
-
-      <SupabaseManager
-        isOpen={isSupabaseOpen}
-        onClose={() => setIsSupabaseOpen(false)}
       />
     </div>
   );
