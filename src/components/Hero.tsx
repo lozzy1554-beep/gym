@@ -14,7 +14,11 @@ export const Hero: React.FC<HeroProps> = ({ locale, onOpenTrial }) => {
   const t = uiTranslations[locale];
 
   return (
-    <section className="relative overflow-hidden bg-[#0F1115] pt-12 pb-20 border-b border-[#2C313B] fx-grid fx-scan">
+    <section className="relative overflow-hidden bg-[#0F1115] pt-12 pb-20 border-b border-[#2C313B] fx-grid fx-bubbles">
+      {/* Soft floating bubbles replace the old falling scan lines */}
+      <div className="fx-bubbles-layer" aria-hidden="true">
+        {Array.from({ length: 14 }, (_, i) => <span key={i} className={`fx-bubble fx-bubble-${i + 1}`} />)}
+      </div>
       {/* Athletic ambient glow background */}
       <div className="absolute inset-0 bg-radial-glow pointer-events-none opacity-80" />
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#B6F500]/5 to-transparent pointer-events-none" />
