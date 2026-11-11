@@ -31,8 +31,11 @@ export const PlansPricing: React.FC<PlansPricingProps> = ({ locale, onSelectPlan
   };
 
   return (
-    <section id="plans" className="py-20 bg-[#0F1115] border-b border-[#2C313B] fx-grid fx-scan relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="plans" className="py-20 bg-[#0F1115] border-b border-[#2C313B] fx-grid fx-bubbles relative overflow-hidden">
+      <div className="fx-bubbles-layer" aria-hidden="true">
+        {Array.from({ length: 14 }, (_, i) => <span key={i} className={`fx-bubble fx-bubble-${i + 1}`} />)}
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header and Billing Switcher */}
         <Reveal kind="fade" delay={0.05} className="flex flex-col items-center text-center max-w-3xl mx-auto mb-14">
           <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#B6F500] uppercase mb-3">
