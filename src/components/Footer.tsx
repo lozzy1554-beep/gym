@@ -20,9 +20,9 @@ export const Footer: React.FC<FooterProps> = ({ locale, onOpenAdmin, onOpenMembe
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3 text-white font-display text-2xl font-bold tracking-wider">
               <img
-                src="/titan-fitness-logo.svg"
-                alt="Titan Fitness logo"
-                className="w-11 h-11 rounded-full object-cover border border-[#8f641b]"
+                src="/assets/titan-gym-logo.svg"
+                alt="Titan Gym logo"
+                className="w-11 h-11 rounded-full object-cover border border-[#D6A12A] shadow-sm"
               />
               <span className="uppercase">{t.nav.brand}</span>
             </div>
