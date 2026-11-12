@@ -48,11 +48,11 @@ export default function App() {
 
   const [isTrialOpen, setIsTrialOpen] = useState(false);
   const [preselectedPlan, setPreselectedPlan] = useState<MembershipPlan | null>(null);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(() => window.location.pathname.replace(/\\/+$/, '') === '/admin');
   const [isMemberOpen, setIsMemberOpen] = useState(false);
   const [isCoachAiOpen, setIsCoachAiOpen] = useState(false);
 
-  // Sync html attributes on locale change
+  // Keep the dedicated /admin route in sync with browser navigation\n  useEffect(() => {\n    const syncAdminRoute = () => setIsAdminOpen(window.location.pathname.replace(/\\/+$/, '') === '/admin');\n    window.addEventListener('popstate', syncAdminRoute);\n    return () => window.removeEventListener('popstate', syncAdminRoute);\n  }, []);\n\n  const openAdminRoute = () => {\n    if (window.location.pathname !== '/admin') window.history.pushState({}, '', '/admin');\n    setIsAdminOpen(true);\n    window.scrollTo(0, 0);\n  };\n\n  const closeAdminRoute = () => {\n    if (window.location.pathname === '/admin') window.history.pushState({}, '', '/');\n    setIsAdminOpen(false);\n  };\n\n  // Sync html attributes on locale change
   useEffect(() => {
     localStorage.setItem('TITAN_LOCALE', locale);
     document.documentElement.lang = locale;
@@ -119,7 +119,7 @@ export default function App() {
           setPreselectedPlan(null);
           setIsTrialOpen(true);
         }}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAdmin={openAdminRoute}
         onOpenMember={() => setIsMemberOpen(true)}
         inquiryCount={inquiries.filter((i) => i.status === 'new').length}
       />
@@ -212,7 +212,7 @@ export default function App() {
           onUpdateInquiryStatus={handleUpdateInquiryStatus}
           plans={plans}
           onTogglePlanPublish={handleTogglePlanPublish}
-          onClose={() => setIsAdminOpen(false)}
+          onClose={closeAdminRoute}
         />
       )}
 
