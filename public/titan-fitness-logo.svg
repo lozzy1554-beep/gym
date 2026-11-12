@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<defs>
+ <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a6"/><stop offset=".42" stop-color="#d99a20"/><stop offset="1" stop-color="#8b5108"/></linearGradient>
+ <filter id="s"><feGaussianBlur stdDeviation="2.5"/></filter>
+</defs>
+<path d="M128 7 235 47v84c0 57-40 98-107 118C61 229 21 188 21 131V47Z" fill="#080808" stroke="url(#g)" stroke-width="7"/>
+<path d="M128 18 224 54v76c0 49-34 85-96 105-62-20-96-56-96-105V54Z" fill="none" stroke="#8f641b" stroke-width="2"/>
+<g fill="url(#g)" stroke="#f9d879" stroke-width="1.5">
+ <path d="M56 74h16v-9h12v9h16v12H84v9H72v-9H56zM156 74h16v-9h12v9h16v12h-16v9h-12v-9h-16z"/>
+ <rect x="92" y="76" width="72" height="7" rx="3.5"/>
+</g>
+<path d="M128 31c-13 12-23 26-23 42 0 11 6 17 12 22l-8 17 19 12 19-12-8-17c6-5 12-11 12-22 0-16-10-30-23-42Z" fill="url(#g)" opacity=".95"/>
+<path d="M91 117q37-18 74 0l14 34-51 20-51-20z" fill="#c78a19" stroke="#f9d879" stroke-width="2"/>
+<text x="128" y="193" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="900" letter-spacing="1.5" fill="url(#g)">TITAN</text>
+<text x="128" y="216" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="800" letter-spacing="4" fill="#f4f1e9">FITNESS</text>
+</svg>
