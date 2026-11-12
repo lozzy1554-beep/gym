@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { Locale } from '../types';
 import { uiTranslations } from '../data/translations';
-import { Globe, Shield, User, Menu, X } from 'lucide-react';
+import { Globe, User, Menu, X } from 'lucide-react';
 import FxButton from './motion/FxButton';
 
 interface HeaderProps {
   locale: Locale;
   setLocale: (loc: Locale) => void;
   onOpenTrial: () => void;
-  onOpenAdmin: () => void;
   onOpenMember: () => void;
-  inquiryCount?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   locale,
   setLocale,
   onOpenTrial,
-  onOpenAdmin,
   onOpenMember,
-  inquiryCount = 0,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = uiTranslations[locale];
@@ -71,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
           ))}
         </nav>
 
-        {/* Zone 3: Actions (Language switcher, Admin, Member, Primary CTA) */}
+        {/* Zone 3: Actions (Language switcher, Member, Primary CTA) */}
         <div className="flex items-center gap-3 shrink-0">
           {/* Language Switcher */}
           <button
@@ -94,20 +90,6 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <User className="w-3.5 h-3.5" />
             <span>{t.nav.memberPortal}</span>
-          </button>
-
-          {/* Admin CMS Button */}
-          <button
-            onClick={onOpenAdmin}
-            type="button"
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#181B21] border border-[#2C313B] text-xs font-medium text-[#A3A9B5] hover:text-[#B6F500] hover:border-[#B6F500]/50 transition-colors whitespace-nowrap cursor-pointer"
-            title="Admin Lead Management"
-          >
-            <Shield className="w-3.5 h-3.5 text-[#B6F500]" />
-            <span>{t.nav.adminPortal}</span>
-            {inquiryCount > 0 && (
-              <span className="w-2 h-2 rounded-full bg-[#B6F500]" />
-            )}
           </button>
 
           {/* Primary CTA using FxButton primary with shimmer sweep & glow pulse */}
@@ -157,16 +139,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <User className="w-4 h-4 text-[#B6F500]" />
               {t.nav.memberPortal}
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAdmin();
-              }}
-              className="flex-1 py-2 text-xs font-semibold rounded-lg bg-[#222630] border border-[#2C313B] text-white flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Shield className="w-4 h-4 text-[#B6F500]" />
-              {t.nav.adminPortal}
             </button>
           </div>
         </div>
