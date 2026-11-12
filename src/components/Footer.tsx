@@ -1,7 +1,7 @@
 import React from 'react';
 import { Locale } from '../types';
 import { uiTranslations } from '../data/translations';
-import { Dumbbell, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 interface FooterProps {
   locale: Locale;
@@ -19,9 +19,11 @@ export const Footer: React.FC<FooterProps> = ({ locale, onOpenAdmin, onOpenMembe
           {/* Brand & Mission */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3 text-white font-display text-2xl font-bold tracking-wider">
-              <div className="w-9 h-9 rounded-lg bg-[#181B21] border border-[#2C313B] flex items-center justify-center text-[#B6F500]">
-                <Dumbbell className="w-5 h-5 -rotate-45" />
-              </div>
+              <img
+                src="/titan-fitness-logo.svg"
+                alt="Titan Fitness logo"
+                className="w-11 h-11 rounded-full object-cover border border-[#8f641b]"
+              />
               <span className="uppercase">{t.nav.brand}</span>
             </div>
 
