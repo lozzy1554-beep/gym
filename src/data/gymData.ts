@@ -4,7 +4,7 @@ export const initialPlans: MembershipPlan[] = [
   {
     id: 'plan-silver',
     slug: 'silver-starter',
-    pricePKR: 7500,
+    pricePKR: 1500,
     durationDays: 30,
     isPopular: false,
     isPublished: true,
@@ -37,7 +37,7 @@ export const initialPlans: MembershipPlan[] = [
   {
     id: 'plan-gold',
     slug: 'gold-pro',
-    pricePKR: 12500,
+    pricePKR: 2000,
     durationDays: 30,
     isPopular: true,
     isPublished: true,
@@ -72,7 +72,7 @@ export const initialPlans: MembershipPlan[] = [
   {
     id: 'plan-platinum',
     slug: 'platinum-vip',
-    pricePKR: 22000,
+    pricePKR: 5000,
     durationDays: 30,
     isPopular: false,
     isPublished: true,
@@ -107,7 +107,7 @@ export const initialPlans: MembershipPlan[] = [
   {
     id: 'plan-student',
     slug: 'student-offpeak',
-    pricePKR: 5500,
+    pricePKR: 1000,
     durationDays: 30,
     isPopular: false,
     isPublished: true,
