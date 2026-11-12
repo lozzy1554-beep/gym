@@ -19,8 +19,8 @@ export const CoachAiDrawer: React.FC<CoachAiDrawerProps> = ({ isOpen, onClose, l
       role: 'coach',
       text:
         locale === 'en'
-          ? "Welcome to Titan Fitness! I am your AI Athletic Coach powered by high-thinking reasoning. Ask me anything about workout programming, compound lift technique, or personalized sports nutrition."
-          : 'ٹائٹن فٹنس میں خوش آمدید! میں آپ کا اے آئی ایتھلیٹک کوچ ہوں۔ ورزش کے شیڈول، ڈائٹ پلان یا درست تیکنیک سے متعلق کوئی بھی سوال پوچھیں۔',
+          ? "Welcome to Titan Gym! I can help with memberships, prices, classes, trainers, facilities, bookings, workout plans, nutrition, and recovery. Ask in English or Urdu."
+          : 'ٹائٹن جم میں خوش آمدید! میں ممبرشپ، فیس، کلاسز، ٹرینرز، سہولیات، بکنگ، ورزش، غذا اور ریکوری کے بارے میں اردو اور انگریزی میں رہنمائی کر سکتا ہوں۔',
     },
   ]);
   const [inputQuery, setInputQuery] = useState('');
@@ -31,16 +31,16 @@ export const CoachAiDrawer: React.FC<CoachAiDrawerProps> = ({ isOpen, onClose, l
   const quickQuestions =
     locale === 'en'
       ? [
-          'Design a 4-day strength & hypertrophy split',
-          'How to fix hip shift during heavy squats?',
-          'Optimal daily protein intake for 75kg male',
-          'Post-workout recovery protocol (sauna & cold plunge)',
+          'What is included in the Gold membership?',
+          'Which trainer can help me with boxing?',
+          'How do I book a trial session?',
+          'Create a beginner 3-day workout plan',
         ]
       : [
-          '4 روزہ پٹھوں کی مضبوطی کا شیڈول بنائیں',
-          'اسکواٹس کے دوران گھٹنے کا درد کیسے روکا جائے؟',
-          'وزن کم کرنے کے لیے روزانہ پروٹین کی ضرورت',
-          'ورزش کے بعد سونا اور آئس باتھ کا طریقہ',
+          'گولڈ ممبرشپ میں کیا سہولیات شامل ہیں؟',
+          'باکسنگ کے لیے کون سے ٹرینر ہیں؟',
+          'ٹرائل سیشن کیسے بک کر سکتا ہوں؟',
+          'ابتدائی افراد کے لیے تین دن کا ورک آؤٹ پلان بنائیں',
         ];
 
   const handleSend = async (queryToSend?: string) => {
@@ -175,8 +175,8 @@ export const CoachAiDrawer: React.FC<CoachAiDrawerProps> = ({ isOpen, onClose, l
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder={
                 locale === 'en'
-                  ? 'Ask Coach about lifting technique, splits, or diet...'
-                  : 'ورزش، ڈائٹ یا تکنیک سے متعلق سوال لکھیں...'
+                  ? 'Ask about plans, classes, trainers, bookings, workouts or nutrition...'
+                  : 'ممبرشپ، کلاسز، ٹرینرز، بکنگ یا ورزش کے بارے میں پوچھیں...'
               }
               className="flex-1 px-4 py-3 rounded-xl bg-[#181B21] border border-[#2C313B] text-white text-xs sm:text-sm placeholder-[#A3A9B5]/60 focus:outline-none focus:border-[#B6F500]"
             />
