@@ -16,10 +16,10 @@ interface Message {
 
 const getLocalCoachReply = (prompt: string, locale: Locale): string => {
   const q = prompt.toLowerCase();
-  const ur = locale === 'ur' || /[\u0600-\u06FF]/.test(prompt);
+  const ur = locale === 'ur' || /[\u0600-\u06FF]/.test(prompt) || /(?:^|\\b)(salam|assalam|kya|kia|hai|hain|mujhe|meri|mera|batao|btao|kitna|kitne|kaise|kese|chahiye|krna|karna|aap|ap)(?:$|\\b)/i.test(q);
   const has = (...terms: string[]) => terms.some((term) => q.includes(term));
 
-  if (has('salam', 'assalam', 'hello', 'hi', 'hey', 'السلام', 'سلام', 'ہیلو')) {
+  if (has('salam', 'assalam', 'hello', 'hey', 'السلام', 'سلام', 'ہیلو') || /(?:^|\\b)hi(?:$|\\b)/i.test(q)) {
     return ur
       ? 'وعلیکم السلام! ٹائٹن جم میں خوش آمدید۔ 😊 آپ ممبرشپ، فیس، ٹرینرز، کلاسز، ٹرائل بکنگ یا ورزش اور ڈائٹ کے بارے میں پوچھ سکتے ہیں۔ میں آپ کی کیا مدد کروں؟'
       : 'Hello! Welcome to Titan Gym. 😊 I can help with memberships, prices, trainers, classes, trial bookings, workouts and nutrition. What would you like to know?';
