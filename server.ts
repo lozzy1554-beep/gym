@@ -26,11 +26,9 @@ async function startServer() {
 
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey || apiKey === 'MY_GEMINI_API_KEY') {
-        return res.json({
-          text:
-            locale === 'ur'
-              ? 'ٹائٹن کوچ کا مشورہ:\n\n1. ہفتہ وار پروگریسو اوور لوڈ پر توجہ دیں۔\n2. ڈیڈ لفٹ اور اسکواٹ کے دوران کمر کو محفوظ زاویے پر رکھیں۔\n3. سیشن کے بعد ہمارے انفراریڈ سونا اور کولڈ پلنج کا استعمال کریں۔\n4. روزانہ 2 تا 2.2 گرام پروٹین فی کلوگرام جسمانی وزن لیں۔'
-              : 'Titan Coach recommendation:\n\n1. Focus on progressive overload across multi-joint compound movements.\n2. Maintain spinal alignment and brace intra-abdominal pressure.\n3. Utilize our 80°C Finnish sauna and 5°C cold plunge for recovery.\n4. Target 1.8g to 2.2g of protein per kg of bodyweight with adequate hydration.',
+        console.error('Coach API unavailable: GEMINI_API_KEY is not configured.');
+        return res.status(503).json({
+          error: 'AI service is not configured. Set GEMINI_API_KEY in the server environment.',
         });
       }
 
@@ -108,9 +106,8 @@ FITNESS COACHING:
       return res.json({ text: response.text });
     } catch (err: any) {
       console.error('Coach API Error:', err);
-      return res.json({
-        text:
-          'Titan Athletic Coach advice: Focus on consistent training volume, compound movements with 2-3 minutes rest between working sets, and recovery protocols.',
+      return res.status(502).json({
+        error: 'Titan Coach could not reach the AI provider. Check the server logs and GEMINI_API_KEY configuration.',
       });
     }
   });
