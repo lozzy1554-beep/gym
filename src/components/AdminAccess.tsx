@@ -138,6 +138,7 @@ export const AdminAccess: React.FC<AdminAccessProps> = (props) => {
         {!isSupabaseConfigured ? (
           <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">Supabase connection configured nahi hai. Login enable karne ke liye project ki VITE_SUPABASE_URL aur VITE_SUPABASE_ANON_KEY settings zaroori hain.</div>
         ) : (
+          <>
           {!ADMIN_EMAIL && <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">Purana admin access band kar diya gaya hai. Naya owner email configure hone tak Admin login temporarily disabled hai.</div>}
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
             <label className="block text-xs font-semibold text-[#A3A9B5]">Authorized email
@@ -151,6 +152,7 @@ export const AdminAccess: React.FC<AdminAccessProps> = (props) => {
             <button disabled={busy || !ADMIN_EMAIL} type="submit" className="w-full rounded-lg bg-[#B6F500] px-4 py-3 font-bold text-[#0F1115] transition hover:bg-[#caff24] disabled:opacity-60">{busy ? 'Please wait…' : 'Secure Login'}</button>
             <button disabled={busy || !ADMIN_EMAIL} type="button" onClick={handleResetPassword} className="w-full py-2 text-xs text-[#B6F500] hover:text-white disabled:opacity-60">Forgot password? Email reset link</button>
           </form>
+          </>
         )}
         <button type="button" onClick={props.onClose} className="mt-4 w-full rounded-lg border border-[#343B46] px-4 py-2.5 text-sm text-[#A3A9B5] hover:text-white">Close</button>
         <p className="mt-5 text-center text-[11px] text-[#737B88]">Public sign-up is disabled. Access is restricted to the owner email.</p>
