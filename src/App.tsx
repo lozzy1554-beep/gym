@@ -52,7 +52,25 @@ export default function App() {
   const [isMemberOpen, setIsMemberOpen] = useState(false);
   const [isCoachAiOpen, setIsCoachAiOpen] = useState(false);
 
-  // Keep the dedicated /admin route in sync with browser navigation\n  useEffect(() => {\n    const syncAdminRoute = () => setIsAdminOpen(window.location.pathname.replace(/\\/+$/, '') === '/admin');\n    window.addEventListener('popstate', syncAdminRoute);\n    return () => window.removeEventListener('popstate', syncAdminRoute);\n  }, []);\n\n  const openAdminRoute = () => {\n    if (window.location.pathname !== '/admin') window.history.pushState({}, '', '/admin');\n    setIsAdminOpen(true);\n    window.scrollTo(0, 0);\n  };\n\n  const closeAdminRoute = () => {\n    if (window.location.pathname === '/admin') window.history.pushState({}, '', '/');\n    setIsAdminOpen(false);\n  };\n\n  // Sync html attributes on locale change
+  // Keep the dedicated /admin route in sync with browser navigation
+  useEffect(() => {
+    const syncAdminRoute = () => setIsAdminOpen(window.location.pathname.replace(/\/+$/, '') === '/admin');
+    window.addEventListener('popstate', syncAdminRoute);
+    return () => window.removeEventListener('popstate', syncAdminRoute);
+  }, []);
+
+  const openAdminRoute = () => {
+    if (window.location.pathname !== '/admin') window.history.pushState({}, '', '/admin');
+    setIsAdminOpen(true);
+    window.scrollTo(0, 0);
+  };
+
+  const closeAdminRoute = () => {
+    if (window.location.pathname === '/admin') window.history.pushState({}, '', '/');
+    setIsAdminOpen(false);
+  };
+
+  // Sync html attributes on locale change
   useEffect(() => {
     localStorage.setItem('TITAN_LOCALE', locale);
     document.documentElement.lang = locale;
