@@ -48,13 +48,13 @@ export default function App() {
 
   const [isTrialOpen, setIsTrialOpen] = useState(false);
   const [preselectedPlan, setPreselectedPlan] = useState<MembershipPlan | null>(null);
-  const [isAdminOpen, setIsAdminOpen] = useState(() => window.location.pathname.replace(/\\/+$/, '') === '/admin');
+  const [isAdminOpen, setIsAdminOpen] = useState(() => window.location.pathname.endsWith('/admin') || window.location.pathname.endsWith('/admin/'));
   const [isMemberOpen, setIsMemberOpen] = useState(false);
   const [isCoachAiOpen, setIsCoachAiOpen] = useState(false);
 
   // Keep the dedicated /admin route in sync with browser navigation
   useEffect(() => {
-    const syncAdminRoute = () => setIsAdminOpen(window.location.pathname.replace(/\/+$/, '') === '/admin');
+    const syncAdminRoute = () => setIsAdminOpen(window.location.pathname.endsWith('/admin') || window.location.pathname.endsWith('/admin/'));
     window.addEventListener('popstate', syncAdminRoute);
     return () => window.removeEventListener('popstate', syncAdminRoute);
   }, []);
