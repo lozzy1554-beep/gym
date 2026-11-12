@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Locale } from '../types';
 import { uiTranslations } from '../data/translations';
-import { Dumbbell, Globe, Shield, User, Menu, X } from 'lucide-react';
+import { Globe, Shield, User, Menu, X } from 'lucide-react';
 import FxButton from './motion/FxButton';
 
 interface HeaderProps {
@@ -49,9 +49,11 @@ export const Header: React.FC<HeaderProps> = ({
           href="#"
           className="flex items-center gap-3 text-white font-display text-2xl font-bold tracking-wider hover:text-[#B6F500] transition-colors whitespace-nowrap shrink-0 group"
         >
-          <div className="w-10 h-10 rounded-lg bg-[#181B21] border border-[#2C313B] flex items-center justify-center text-[#B6F500] group-hover:border-[#B6F500] transition-colors shadow-sm">
-            <Dumbbell className="w-5 h-5 -rotate-45" />
-          </div>
+          <img
+            src="/assets/titan-gym-logo.svg"
+            alt="Titan Gym logo"
+            className="w-11 h-11 rounded-full object-cover border border-[#D6A12A] shadow-sm group-hover:scale-105 transition-transform"
+          />
           <span className="tracking-widest uppercase">{t.nav.brand}</span>
         </a>
 
