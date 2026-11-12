@@ -13,6 +13,75 @@ interface Message {
   text: string;
 }
 
+
+const getLocalCoachReply = (prompt: string, locale: Locale): string => {
+  const q = prompt.toLowerCase();
+  const ur = locale === 'ur' || /[\u0600-\u06FF]/.test(prompt);
+  const has = (...terms: string[]) => terms.some((term) => q.includes(term));
+
+  if (has('salam', 'assalam', 'hello', 'hi', 'hey', 'السلام', 'سلام', 'ہیلو')) {
+    return ur
+      ? 'وعلیکم السلام! ٹائٹن جم میں خوش آمدید۔ 😊 آپ ممبرشپ، فیس، ٹرینرز، کلاسز، ٹرائل بکنگ یا ورزش اور ڈائٹ کے بارے میں پوچھ سکتے ہیں۔ میں آپ کی کیا مدد کروں؟'
+      : 'Hello! Welcome to Titan Gym. 😊 I can help with memberships, prices, trainers, classes, trial bookings, workouts and nutrition. What would you like to know?';
+  }
+  if (has('gold', 'گولڈ')) {
+    return ur
+      ? 'گولڈ پرفارمنس ممبرشپ PKR 2,000 فی 30 دن ہے۔ اس میں سلور کی سہولیات، ہفتہ وار HIIT، باکسنگ اور یوگا کلاسز، سونا اور کولڈ پلنج، ماہانہ 2 پرسنل ٹریننگ سیشنز، نیوٹریشن گائیڈنس اور 2 گیسٹ پاسز شامل ہیں۔ تازہ تفصیلات ادائیگی سے پہلے ٹیم سے کنفرم کر لیں۔'
+      : 'Gold Performance costs PKR 2,000 for 30 days. It includes Silver benefits, weekly HIIT/Boxing/Yoga classes, sauna and cold-plunge access, 2 personal-training sessions per month, nutrition guidance and 2 monthly guest passes. Please confirm current details with the team before payment.';
+  }
+  if (has('silver', 'سلور')) {
+    return ur
+      ? 'سلور فاؤنڈیشن PKR 1,500 فی 30 دن ہے۔ اس میں جم فلور، فری ویٹس، لاکر روم، ہاٹ شاورز، ابتدائی باڈی کمپوزیشن اسکین اور موبائل ایپ ورک آؤٹ ٹریکنگ شامل ہیں۔ درج شدہ اوقات صبح 6 بجے سے رات 11 بجے تک ہیں۔'
+      : 'Silver Foundation costs PKR 1,500 for 30 days. It includes gym-floor and free-weight access, locker room, hot showers, an initial body-composition scan and mobile-app workout tracking. Listed access hours are 6:00 AM–11:00 PM.';
+  }
+  if (has('platinum', 'پلاٹینم', 'vip')) {
+    return ur
+      ? 'پلاٹینم VIP ایلیٹ PKR 5,000 فی 30 دن ہے۔ ویب سائٹ کے مطابق اس میں 24/7 ترجیحی رسائی، ماہانہ 8 پرائیویٹ کوچنگ سیشنز، ہفتہ وار InBody ٹریکنگ، پرائیویٹ لاکر، لانڈری اور ریکوری سہولیات شامل ہیں۔'
+      : 'Platinum VIP Elite costs PKR 5,000 for 30 days. Listed benefits include 24/7 priority access, 8 private coaching sessions per month, weekly InBody tracking, private locker, laundry and recovery-suite access.';
+  }
+  if (has('student', 'off-peak', 'off peak', 'اسٹوڈنٹ', 'طلبہ')) {
+    return ur
+      ? 'اسٹوڈنٹ اور آف پیک ممبرشپ PKR 1,000 فی 30 دن ہے۔ اوقات روزانہ صبح 10 بجے سے شام 4 بجے تک ہیں۔ اسٹوڈنٹ کارڈ کی تصدیق ضروری ہے۔'
+      : 'Student & Off-Peak costs PKR 1,000 for 30 days, with access from 10:00 AM to 4:00 PM daily. Student ID verification is required.';
+  }
+  if (has('boxing', 'باکسنگ')) {
+    return ur
+      ? 'باکسنگ کنڈیشنگ کے لیے ویب سائٹ پر فرحان احمد درج ہیں۔ ان کی listed specialty باکسنگ، فٹ ورک اور agility ہے، اور listed schedule منگل تا ہفتہ 2 PM–10 PM ہے۔ آنے سے پہلے وقت کنفرم کر لیں۔'
+      : 'Farhan Ahmed is listed for boxing conditioning, footwork and agility. His listed schedule is Tuesday–Saturday, 2:00 PM–10:00 PM. Please confirm availability before visiting.';
+  }
+  if (has('trainer', 'coach', 'ٹرینر', 'کوچ')) {
+    return ur
+      ? 'ٹائٹن جم کے ویب سائٹ پر درج ٹرینرز: حمزہ طارق (Strength/Weightlifting)، سارہ خان (HIIT/Women’s Strength)، فرحان احمد (Boxing) اور ڈاکٹر عائشہ ملک (Physiotherapy/Mobility)۔ ان کے اوقات تبدیل ہو سکتے ہیں، اس لیے وزٹ سے پہلے کنفرم کریں۔'
+      : 'Website-listed trainers: Hamza Tariq (strength/weightlifting), Sarah Khan (HIIT/women’s strength), Farhan Ahmed (boxing) and Dr. Ayesha Malik (physiotherapy/mobility). Schedules can change, so confirm before visiting.';
+  }
+  if (has('price', 'fee', 'cost', 'charges', 'فیس', 'قیمت', 'کتنے')) {
+    return ur
+      ? 'ٹائٹن جم کی 30 دن کی ممبرشپ فیس: Student PKR 1,000، Silver PKR 1,500، Gold PKR 2,000، Platinum VIP PKR 5,000۔ کسی اضافی چارج یا رعایت کی تصدیق ٹیم سے کریں۔'
+      : 'Titan Gym 30-day membership prices: Student PKR 1,000; Silver PKR 1,500; Gold PKR 2,000; Platinum VIP PKR 5,000. Please ask the team to confirm any extra fees or discounts.';
+  }
+  if (has('class', 'schedule', 'timetable', 'کلاس', 'شیڈول', 'ٹائمنگ')) {
+    return ur
+      ? 'ویب سائٹ پر Strength، HIIT، Boxing، Mobility/Yoga اور Functional/CrossFit کلاسز درج ہیں۔ کلاس کا شیڈول اور جگہ دستیاب ہونے کی تصدیق Contact/WhatsApp سے کر لیں۔'
+      : 'The website lists Strength, HIIT, Boxing, Mobility/Yoga and Functional/CrossFit classes. Please check the live schedule or contact the team to confirm current timings and availability.';
+  }
+  if (has('book', 'booking', 'trial', 'join', 'بک', 'ٹرائل', 'داخلہ')) {
+    return ur
+      ? 'ٹرائل یا ممبرشپ کے لیے ویب سائٹ کے booking/contact حصے میں جائیں یا WhatsApp کے ذریعے ٹیم سے رابطہ کریں۔ چیٹ میں بکنگ خود مکمل نہیں ہوتی؛ ٹیم کی confirmation ضرور حاصل کریں۔'
+      : 'To arrange a trial or join, use the website’s booking/contact section or message the team on WhatsApp. This chat cannot complete a booking; please wait for confirmation from the team.';
+  }
+  if (has('service', 'facility', 'equipment', 'سہولت', 'سروس', 'مشین')) {
+    return ur
+      ? 'ٹائٹن جم کی درج شدہ سہولیات میں Olympic weightlifting، strength area، HIIT/conditioning، personal coaching، sauna، cold plunge، percussion therapy اور mobility/foam-rolling area شامل ہیں۔'
+      : 'Listed Titan Gym facilities include Olympic weightlifting, a strength area, HIIT/conditioning equipment, personal coaching, sauna, cold plunge, percussion therapy and a mobility/foam-rolling area.';
+  }
+  if (has('thank', 'شکریہ', 'مہربانی')) {
+    return ur ? 'خوش رہیے! 😊 ٹائٹن جم کے بارے میں کوئی اور سوال ہو تو ضرور پوچھیں۔' : 'You’re welcome! 😊 Feel free to ask anything else about Titan Gym.';
+  }
+  return ur
+    ? 'آپ کا سوال موصول ہوا۔ اس وقت AI سروس سے رابطہ نہیں ہو رہا، اس لیے میں اس سوال کا درست جواب نہیں بنا سکتا۔ براہِ کرم کچھ دیر بعد دوبارہ کوشش کریں یا ویب سائٹ کے Contact/WhatsApp سے ٹیم سے رابطہ کریں۔'
+    : 'I received your question, but the AI service is temporarily unreachable, so I can’t generate a reliable answer right now. Please try again shortly or contact the team through the website’s Contact/WhatsApp section.';
+};
+
 export const CoachAiDrawer: React.FC<CoachAiDrawerProps> = ({ isOpen, onClose, locale }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -67,12 +136,8 @@ export const CoachAiDrawer: React.FC<CoachAiDrawerProps> = ({ isOpen, onClose, l
       const reply = data.text || (locale === 'en' ? 'Coach is currently reviewing your form.' : 'کوچ رہنمائی فراہم کر رہا ہے۔');
       setMessages((prev) => [...prev, { role: 'coach', text: reply }]);
     } catch (err) {
-      // Fallback expert guidance
-      const fallbackReply =
-        locale === 'en'
-          ? `Here is your customized Titan recommendation for "${text.trim()}":\n\n1. Progressive Overload: Aim for 3-4 working sets in the 6-10 rep range with RPE 8.\n2. Biomechanical Form: Focus on brace control and full range of motion. Visit our Olympic platforms for coach supervision.\n3. Nutrition: Target 1.8g to 2.2g of protein per kg of bodyweight, paired with 3-4 liters of water.\n4. Recovery: Utilize our 80°C cedar sauna followed by a 3-minute cold plunge (5°C) to accelerate recovery.`
-          : `آپ کے سوال "${text.trim()}" سے متعلق ٹائٹن کوچ کا سائنسی مشورہ:\n\n1. باقاعدہ پروگریسو اوور لوڈ: ہفتہ وار وزن میں بتدریج اضافہ کریں (6 تا 10 ریپس فی سیٹ)۔\n2. درست طریقہ کار: کمر کو سیدھا رکھیں اور مکمل رینج کے ساتھ حرکت کریں۔ ہمارے اولمپک فلور پر کوچز سے براہ راست تصدیق کروائیں۔\n3. غذائیت: اپنے جسمانی وزن کے فی کلو گرام کے حساب سے 1.8 تا 2 گرام پروٹین لیں۔\n4. ریکوری: سیشن کے بعد 15 منٹ سونا اور 3 منٹ کولڈ پلنج کا استعمال کریں۔`;
-
+      console.error('Titan Coach request failed:', err);
+      const fallbackReply = getLocalCoachReply(text.trim(), locale);
       setMessages((prev) => [...prev, { role: 'coach', text: fallbackReply }]);
     } finally {
       setIsLoading(false);
