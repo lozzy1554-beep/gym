@@ -137,9 +137,7 @@ export default function App() {
           setPreselectedPlan(null);
           setIsTrialOpen(true);
         }}
-        onOpenAdmin={openAdminRoute}
         onOpenMember={() => setIsMemberOpen(true)}
-        inquiryCount={inquiries.filter((i) => i.status === 'new').length}
       />
 
       <PageTransition pageKey={locale} dir={locale === 'ur' ? -1 : 1}>
