@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Locale } from '../types';
 import { uiTranslations } from '../data/translations';
 import { initialFaqs } from '../data/gymData';
-import { ChevronDown, Search } from 'lucide-react';
+import { ChevronDown, Search, MessageCircle, ArrowRight } from 'lucide-react';
 import Reveal from './motion/Reveal';
+import FxButton from './motion/FxButton';
 
 interface FaqSectionProps {
   locale: Locale;
@@ -29,7 +30,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ locale }) => {
     <section id="faq" className="py-20 bg-[#0F1115] border-b border-[#2C313B]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <Reveal kind="fade" delay={0.05} className="text-center mb-10">
+        <Reveal kind="blur" delay={0.05} className="text-center mb-10">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#B6F500] uppercase mb-3">
             <span className="w-2 h-0.5 bg-[#B6F500]" />
             <span>{t.faq.tag}</span>
@@ -94,6 +95,24 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ locale }) => {
             })
           )}
         </div>
+
+        {/* Animated contact call-to-action */}
+        <Reveal kind="scale" delay={0.12} className="mt-10 text-center">
+          <p className="text-sm sm:text-base text-[#A3A9B5] mb-4">
+            {locale === 'en'
+              ? 'Still have questions? Our team is ready to help.'
+              : 'اب بھی کوئی سوال ہے؟ ہماری ٹیم آپ کی مدد کے لیے تیار ہے۔'}
+          </p>
+          <FxButton
+            kind="primary"
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="!px-7 !py-3.5 !rounded-xl text-xs font-bold uppercase tracking-wider"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>{locale === 'en' ? 'Contact Us' : 'ہم سے رابطہ کریں'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </FxButton>
+        </Reveal>
       </div>
     </section>
   );
