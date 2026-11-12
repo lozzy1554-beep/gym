@@ -4,7 +4,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { AdminPanel } from './AdminPanel';
 import { Locale, Inquiry, InquiryStatus, MembershipPlan } from '../types';
 
-const ADMIN_EMAIL = '';
+const ADMIN_EMAIL = 'awais@gmail.com';
 
 interface AdminAccessProps {
   locale: Locale;
